@@ -1,0 +1,106 @@
+/* Workspace list table — the prototype's .ws-table. Element selectors are scoped
+   under the .table class (CSS-module) and stay unlayered so they win over Mantine's
+   layered Table styles. */
+.wrap {
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-lg);
+  overflow: hidden;
+  background: var(--cl-bg-elev);
+}
+
+.table thead th {
+  text-align: left;
+  font-family: var(--cl-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cl-text-4);
+  padding: 13px 16px;
+  background: var(--cl-bg-sunken);
+  border-bottom: 1px solid var(--cl-border);
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--cl-border);
+  vertical-align: middle;
+  color: var(--cl-text-2);
+}
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.row {
+  cursor: pointer;
+  transition: background var(--cl-ease);
+}
+.row:hover {
+  background: var(--cl-accent-soft);
+}
+
+.wsId {
+  font-family: var(--cl-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cl-text-3);
+  background: var(--cl-surface-2);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.name {
+  font-weight: 600;
+  color: var(--cl-text);
+  white-space: nowrap;
+}
+
+.count {
+  font-family: var(--cl-mono);
+  font-weight: 700;
+  color: var(--cl-text);
+  font-size: 13px;
+}
+
+.types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 280px;
+}
+.typeChip {
+  font-family: var(--cl-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.typeChipN {
+  margin-left: 5px;
+  font-weight: 800;
+  opacity: 0.75;
+}
+
+.createdBy {
+  font-size: 12px;
+  color: var(--cl-text-2);
+  white-space: nowrap;
+}
+
+.upd {
+  font-family: var(--cl-mono);
+  font-size: 11px;
+  color: var(--cl-text-3);
+  white-space: nowrap;
+}
+
+.chevron {
+  color: var(--cl-text-4);
+}

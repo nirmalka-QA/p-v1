@@ -1,0 +1,287 @@
+/* ── Code editor — VS Code-style window (always dark, like the code surface) ── */
+.editorShell {
+  overflow: hidden;
+  background: var(--mantine-color-dark-8);
+  border-color: var(--mantine-color-dark-4);
+}
+.editorLayout {
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+}
+
+/* Explorer sidebar (file tree lives here — one window, not a separate panel). */
+.editorSidebar {
+  width: 230px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--mantine-color-dark-7);
+  border-right: 1px solid var(--mantine-color-dark-4);
+  overflow: hidden;
+}
+.editorSidebarTitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mantine-color-dark-2);
+  padding: 9px 12px 6px;
+}
+.editorSidebarBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 6px 8px;
+}
+
+/* Explorer rows (dark NavLink override). */
+.explorerItem {
+  color: var(--mantine-color-dark-0);
+  border-radius: var(--cl-radius-sm);
+}
+.explorerItem:hover {
+  background-color: var(--mantine-color-dark-6);
+}
+.explorerItem[data-active],
+.explorerItem[data-active]:hover {
+  background-color: var(--mantine-color-dark-5);
+}
+.explorerLabel {
+  font-size: 13px;
+  color: var(--mantine-color-dark-0);
+}
+
+/* Editor column (tabs → breadcrumb → code). */
+.editorMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.editorBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--mantine-color-dark-8);
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+}
+.editorTabs {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  overflow-x: auto;
+}
+.editorTab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 12px;
+  color: var(--mantine-color-dark-1);
+  background: var(--mantine-color-dark-8);
+  border-right: 1px solid var(--mantine-color-dark-5);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--cl-ease), color var(--cl-ease);
+}
+.editorTab:hover {
+  color: var(--mantine-color-dark-0);
+  background: var(--mantine-color-dark-7);
+}
+.editorTabActive,
+.editorTabActive:hover {
+  color: var(--mantine-color-white);
+  background: var(--mantine-color-dark-6);
+  box-shadow: inset 0 2px 0 0 var(--cl-accent);
+}
+
+/* Toolbar actions (copy / download) on the dark bar. */
+.editorAction {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  color: var(--mantine-color-dark-1);
+  border-radius: var(--cl-radius-sm);
+  white-space: nowrap;
+}
+.editorAction:hover {
+  color: var(--mantine-color-dark-0);
+  background: var(--mantine-color-dark-6);
+}
+
+.editorPath {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-7);
+}
+.editorPathIcon {
+  color: var(--mantine-color-dark-2);
+  flex-shrink: 0;
+}
+.editorPathText {
+  color: var(--mantine-color-dark-1);
+}
+.editorBody {
+  font-size: 13px;
+}
+.editorPlaceholder {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--mantine-color-dark-2);
+  font-size: 13px;
+}
+
+/* ── Implementation sidebar nav ── */
+.nav {
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.navSectionLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cl-text-3);
+  font-weight: 600;
+  padding: 10px 8px 4px;
+}
+/* ── Setup wizard (inline in the page) — footer sticks to the work-area bottom ── */
+.wizardInlineFooter {
+  position: sticky;
+  bottom: 0;
+  background: var(--cl-bg);
+  border-top: 1px solid var(--cl-border);
+  padding: 12px 0;
+  margin-top: 8px;
+}
+
+/* Clickable list row (story rows). */
+.rowClickable {
+  cursor: pointer;
+  transition: background var(--cl-ease);
+}
+.rowClickable:hover {
+  background: var(--cl-surface-2);
+}
+
+/* Optional tech-stack area card (Frontend / Backend / Database). */
+.stackArea {
+  border: 1px solid var(--cl-border);
+}
+.stackAreaOff {
+  opacity: 0.7;
+}
+
+/* Icon-card option in the tech-stack pickers (OptionCardGroup). */
+.optionCard {
+  cursor: pointer;
+  transition: border-color var(--cl-ease), background-color var(--cl-ease);
+}
+.optionCard:hover {
+  background-color: var(--cl-surface-2);
+}
+.optionCard[data-checked] {
+  border-color: var(--cl-accent);
+  background-color: var(--cl-surface-2);
+}
+
+/* High-contrast action on the scaffold notice: black button in light mode,
+   white in dark mode (with inverted label), via Mantine's Button CSS vars. */
+.noticeAction {
+  --button-bg: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  --button-hover: light-dark(var(--mantine-color-dark-9), var(--mantine-color-gray-2));
+  --button-color: light-dark(var(--mantine-color-white), var(--mantine-color-black));
+}
+
+/* ── Stories Kanban board ── */
+.board {
+  align-items: stretch;
+  padding-bottom: 4px;
+}
+.boardColumn {
+  width: 300px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  background: var(--cl-surface-2);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-md);
+  padding: 8px;
+}
+.boardColumnHeader {
+  padding: 4px 6px 10px;
+}
+.boardColumnBody {
+  flex: 1;
+}
+/* Card sits on the page background so it lifts off the column surface. */
+.storyCard {
+  background: var(--cl-bg);
+  transition: border-color var(--cl-ease), box-shadow var(--cl-ease);
+}
+.storyCardNext {
+  border-color: var(--mantine-color-teal-5);
+}
+.storyCardBody {
+  cursor: pointer;
+}
+
+/* ── Code workbench: change-request chat (left) + live code (right) as one surface ── */
+.workbench {
+  overflow: hidden;
+}
+.workbenchRow {
+  display: flex;
+  align-items: stretch;
+}
+.workbenchChat {
+  width: 340px;
+  min-width: 340px;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-right: 1px solid var(--cl-border);
+  background: var(--cl-bg-elev);
+}
+.workbenchCode {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+/* CodeEditor embedded flush inside the workbench (the container owns the border/radius). */
+.editorEmbedded {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  border-radius: 0;
+}
+/* CodeChatPanel layout (shared by standalone + embedded; replaces inline styles). */
+.chatColumn {
+  display: flex;
+  flex-direction: column;
+}
+.chatScroll {
+  flex: 1;
+  min-height: 0;
+}
+.chatMessage {
+  flex: 1;
+  min-width: 0;
+}
+.chatMessageText {
+  white-space: pre-wrap;
+}
+
+/* Clickable story title in the workspace bar (opens the review drawer). */
+.storyTitleButton:hover {
+  text-decoration: underline;
+}

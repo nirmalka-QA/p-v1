@@ -1,0 +1,102 @@
+/* Fills the host's main region (the host owns the global top bar). In
+   standalone dev it fills its mount point, which is the full viewport. */
+.shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--cl-bg);
+  color: var(--cl-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Body: grid adapts based on context ── */
+.body {
+  flex: 1;
+  display: grid;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  transition: grid-template-columns 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Column layouts — composed from sidebar / main / assistant presence. */
+.bodyMain {
+  grid-template-columns: 1fr;
+}
+.bodyMainAssistant {
+  grid-template-columns: 1fr var(--cl-assistant-w);
+}
+.bodySidebarMain {
+  grid-template-columns: var(--cl-sidebar-w) 1fr;
+}
+.bodySidebarMainAssistant {
+  grid-template-columns: var(--cl-sidebar-w) 1fr var(--cl-assistant-w);
+}
+
+.sidebarSlot {
+  background: var(--cl-bg-sunken);
+  border-right: 1px solid var(--cl-border);
+  overflow-y: auto;
+}
+
+/* Drag handle sitting on the sidebar / main boundary (tracks --cl-sidebar-w). */
+.resizeHandle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--cl-sidebar-w);
+  width: 9px;
+  transform: translateX(-5px);
+  cursor: col-resize;
+  z-index: 40;
+  touch-action: none;
+}
+.resizeHandle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background-color: transparent;
+  transition: background-color var(--cl-ease);
+}
+.resizeHandle:hover::after {
+  background-color: var(--cl-border-strong);
+}
+
+/* While dragging: pin the column transition off and suppress text selection. */
+.resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+.resizing .body {
+  transition: none;
+}
+.resizing .resizeHandle::after {
+  background-color: var(--mantine-color-indigo-5);
+}
+
+/* Scroll region only — spacing/width handled by PageContainer inside. */
+.workArea {
+  background: var(--cl-bg);
+  overflow-y: auto;
+}
+
+/* Assistant panel slides in from the right */
+.assistantSlot {
+  background: var(--cl-bg-sunken);
+  border-left: 1px solid var(--cl-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideInRight 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}

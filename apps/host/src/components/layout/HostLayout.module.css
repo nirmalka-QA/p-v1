@@ -1,0 +1,32 @@
+/* Host application shell: a fixed top bar over a single fill-remaining region.
+   The mounted remote (or a host page) owns its own scroll inside .main. */
+.shell {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--cl-bg);
+  color: var(--cl-text);
+}
+
+.topBar {
+  height: var(--cl-header-h);
+  flex-shrink: 0;
+  background: var(--cl-bg-elev);
+  border-bottom: 1px solid var(--cl-border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}

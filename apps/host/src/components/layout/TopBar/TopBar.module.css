@@ -1,0 +1,287 @@
+/* ── Brand ── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--cl-text);
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+  transition: opacity var(--cl-ease);
+}
+.brand:hover { opacity: 0.8; }
+
+/* In a project the brand is a separator before the project switcher (prototype
+   .abrand has a right border); the workspace contexts don't. */
+.brandSep {
+  padding-right: 12px;
+  border-right: 1px solid var(--cl-border);
+}
+
+.brandMark {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--cl-accent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.brandMark::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--cl-bg-elev);
+  transform: rotate(45deg);
+  position: absolute;
+}
+
+/* Chevron on the project dropdown trigger — rotates when the menu opens. */
+.chevron {
+  color: var(--cl-text-3);
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: transform var(--cl-ease);
+}
+.chevronOpen { transform: rotate(180deg); }
+
+/* ── Project dropdown (prototype .proj-dd) — the only top-bar control in a project ── */
+.projDdTrig {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 9px 5px 6px;
+  border-radius: var(--cl-radius);
+  cursor: pointer;
+  transition: background var(--cl-ease);
+}
+.projDdTrig:hover { background: var(--cl-bg-hover); }
+
+/* The small project logo in the trigger (mono initials on the project colour). */
+.plogoSm {
+  font-family: var(--cl-mono);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.pddName {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cl-text);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.projDdMenu {
+  width: 280px;
+  padding: 6px;
+  border: 1px solid var(--cl-border-strong);
+  border-radius: var(--cl-radius-md);
+}
+
+/* A menu row (prototype .pdd-row). */
+.pddRow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cl-text);
+}
+.pddRow:hover { background: var(--cl-bg-hover); }
+.pddRowBack { font-weight: 600; color: var(--cl-text-2); }
+
+/* Leading icon — dimmer than the label (prototype .pdd-ic). */
+.pddIc { color: var(--cl-text-3); flex-shrink: 0; }
+
+.pddSep { margin: 5px 4px; border-color: var(--cl-border); }
+
+/* Context-budget readout (prototype .pdd-token). */
+.pddToken { padding: 8px 10px; }
+.pddTokenTop {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cl-text-2);
+  margin-bottom: 7px;
+}
+.pddTokenVal { font-family: var(--cl-mono); color: var(--cl-text); }
+.pddTokenBar {
+  height: 7px;
+  background: var(--cl-bg-sunken);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.pddTokenFill { height: 100%; background: var(--cl-accent); border-radius: 6px; }
+.pddTokenSub { font-size: 10px; color: var(--cl-text-4); margin-top: 6px; }
+
+/* Pushes the right-side cluster to the end in the workspace context. */
+.spacer { flex: 1; }
+
+/* ── Top-nav segmented control ([Dashboard | Workspaces]) ── */
+.topNav {
+  display: flex;
+  gap: 2px;
+  background: var(--cl-bg-sunken);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  padding: 3px;
+}
+.topNavItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cl-text-3);
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--cl-ease);
+  white-space: nowrap;
+}
+.topNavItem:hover { color: var(--cl-text); }
+.topNavItemActive,
+.topNavItemActive:hover {
+  background: var(--cl-bg-elev);
+  color: var(--cl-text);
+  box-shadow: var(--cl-shadow-sm);
+}
+
+/* Count pill inside a nav tab (Projects 5 / Members 4) */
+.navCt {
+  font-family: var(--cl-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--cl-text-3);
+  background: var(--cl-bg-sunken);
+  border: 1px solid var(--cl-border);
+  border-radius: 20px;
+  padding: 0 6px;
+  margin-left: 2px;
+}
+.topNavItemActive .navCt {
+  color: var(--cl-accent);
+  border-color: var(--cl-border-strong);
+}
+
+/* ── Icon buttons (help / support) + theme toggle ── */
+.ticon {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: var(--cl-radius);
+  color: var(--cl-text-2);
+  transition: all var(--cl-ease);
+}
+.ticon:hover { background: var(--cl-bg-hover); color: var(--cl-text); }
+
+.tbtn {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--cl-radius);
+  background: transparent;
+  border: 1px solid var(--cl-border);
+  color: var(--cl-text-2);
+  transition: all var(--cl-ease);
+}
+.tbtn:hover {
+  color: var(--cl-text);
+  border-color: var(--cl-border-strong);
+  background: var(--cl-bg-hover);
+}
+
+/* ── Profile dropdown ── */
+.profileTrigger {
+  display: inline-flex;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.profileMenu { padding: 6px; min-width: 215px; }
+.pmHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--cl-border);
+  margin-bottom: 5px;
+}
+.pmName { font-size: 13px; font-weight: 700; color: var(--cl-text); line-height: 1.2; }
+.pmRole {
+  font-family: var(--cl-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mantine-color-violet-light-color);
+  margin-top: 2px;
+}
+.pmItem {
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cl-text);
+}
+
+/* ── Workspace switcher (workspace-home context) ── */
+.wsSwitchTrig {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius);
+  cursor: pointer;
+  background: transparent;
+  transition: all var(--cl-ease);
+}
+.wsSwitchTrig:hover { border-color: var(--cl-border-strong); background: var(--cl-bg-elev); }
+.wsSwitchName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cl-text);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wsSwitchMenu { padding: 6px; min-width: 240px; }
+.wsSwitchLabel {
+  font-family: var(--cl-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cl-text-3);
+  padding: 6px 10px 4px;
+}
+.wsSwitchItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cl-text);
+}

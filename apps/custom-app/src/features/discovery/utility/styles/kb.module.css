@@ -1,0 +1,31 @@
+/* Two-panel Knowledge Base layout (left nav + content) */
+.grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-md);
+  overflow: hidden;
+  min-height: 480px;
+}
+
+.nav {
+  background: var(--cl-bg-sunken);
+  border-right: 1px solid var(--cl-border);
+  align-self: start;
+}
+
+.content {
+  background: var(--cl-bg);
+  min-width: 0;
+}
+
+/* Note card hover lift */
+.noteCard {
+  cursor: pointer;
+  transition: border-color var(--cl-ease), box-shadow var(--cl-ease), transform var(--cl-ease);
+}
+.noteCard:hover {
+  border-color: var(--cl-border-strong);
+  box-shadow: var(--cl-shadow-sm);
+  transform: translateY(-1px);
+}

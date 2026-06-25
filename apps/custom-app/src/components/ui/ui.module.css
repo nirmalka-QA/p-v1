@@ -1,0 +1,13 @@
+/* Vertical connector between progress steps (AIProgressSteps). */
+.stepIconWrap {
+  position: relative;
+}
+.stepConnector {
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  bottom: -8px;
+  width: 1px;
+  background-color: var(--cl-border);
+  transform: translateX(-50%);
+}

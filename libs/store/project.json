@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "store",
+  "projectType": "library",
+  "sourceRoot": "libs/store/src",
+  "tags": ["type:lib", "scope:shared"]
+}

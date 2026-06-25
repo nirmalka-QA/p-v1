@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "esnext",
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Resolve @wispr/* to lib source — mirrors the Vite alias and tsconfig.base paths. */
+    "paths": {
+      "@wispr/contracts": ["../../libs/contracts/src/index.ts"],
+      "@wispr/ui": ["../../libs/ui/src/index.ts"],
+      "@wispr/tokens": ["../../libs/tokens/src/index.ts"],
+      "@wispr/services": ["../../libs/services/src/index.ts"],
+      "@wispr/store": ["../../libs/store/src/index.ts"],
+      "@wispr/mfe-runtime": ["../../libs/mfe-runtime/src/index.ts"],
+      "@wispr/projects": ["../../libs/projects/src/index.ts"],
+      "@wispr/utils": ["../../libs/utils/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

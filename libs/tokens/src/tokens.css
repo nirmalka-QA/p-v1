@@ -1,0 +1,155 @@
+/*
+ * @wispr/tokens — canonical design-token stylesheet. Defines the --cl-* CSS
+ * custom properties (light + dark) the Mantine theme object references, plus
+ * the base reset and scrollbar styling. The host imports this once; remotes
+ * inherit it. Keep this in lockstep with the mantineTheme in theme.ts.
+ *
+ * CSS LAYERS (load-bearing — see CLAUDE.md): the universal reset lives in the
+ * "base" layer, declared BELOW Mantine's "mantine" layer, so Mantine's
+ * component padding/margins win over the blanket "* margin:0 padding:0"
+ * (otherwise every Mantine component would render flattened). Everything else
+ * here stays UNLAYERED so it still overrides Mantine (design tokens + the
+ * dark-mode input tweaks). For the "base, mantine" order to take effect, this
+ * file MUST be imported before Mantine's layered stylesheets.
+ */
+@layer base, mantine;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+html { height: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss02';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#root { height: 100%; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--cl-border-strong);
+  border-radius: 5px;
+  border: 2px solid var(--cl-bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--cl-text-4); }
+
+/* ── Design tokens · Light ─────────────────────────────── */
+:root,
+[data-mantine-color-scheme='light'] {
+  --cl-bg:           #fbfbfa;
+  --cl-bg-elev:      #ffffff;
+  --cl-bg-sunken:    #f4f4f2;
+  --cl-bg-hover:     #f0efed;
+  --cl-surface:      #ffffff;
+  --cl-surface-2:    #f7f7f5;
+  --cl-surface-3:    #efeeec;
+  --cl-border:       #e8e6e0;
+  --cl-border-strong:#d6d3cd;
+  --cl-border-focus: #1f2937;
+  --cl-text:         #1a1a1a;
+  --cl-text-2:       #525252;
+  --cl-text-3:       #8a8a8a;
+  --cl-text-4:       #b3b1ab;
+  --cl-text-on-acc:  #ffffff;
+  --cl-accent:       #1f2937;
+  --cl-accent-hover: #0f172a;
+  --cl-accent-soft:  #f1f2f4;
+  --cl-indigo:       #4f46e5;
+  --cl-indigo-soft:  #eef2ff;
+  --cl-indigo-bdr:   #c7d2fe;
+  --cl-teal:         #0f766e;
+  --cl-teal-soft:    #ecfdf5;
+  --cl-teal-bdr:     #99f6e4;
+  --cl-amber:        #b45309;
+  --cl-amber-soft:   #fef3c7;
+  --cl-amber-bdr:    #fde68a;
+  --cl-rose:         #be123c;
+  --cl-rose-soft:    #ffe4e6;
+  --cl-rose-bdr:     #fecdd3;
+  --cl-shadow-sm:    0 1px 2px rgba(0,0,0,0.04);
+  --cl-shadow-md:    0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --cl-shadow-lg:    0 20px 50px -20px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.06);
+  --cl-mono:         'JetBrains Mono', 'Fira Code', 'Consolas', ui-monospace, monospace;
+  --cl-radius-sm:    4px;
+  --cl-radius:       6px;
+  --cl-radius-md:    8px;
+  --cl-radius-lg:    12px;
+  --cl-ease:         150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cl-header-h:     48px;
+  --cl-rail-h:       38px;
+  --cl-status-h:     28px;
+  --cl-sidebar-w:    360px;
+  --cl-assistant-w:  360px;
+}
+
+/* ── Design tokens · Dark ──────────────────────────────── */
+[data-mantine-color-scheme='dark'] {
+  --cl-bg:           #0d0d0f;
+  --cl-bg-elev:      #131316;
+  --cl-bg-sunken:    #09090b;
+  --cl-bg-hover:     #1a1a1e;
+  --cl-surface:      #16161a;
+  --cl-surface-2:    #1a1a1f;
+  --cl-surface-3:    #202026;
+  --cl-border:       #26262d;
+  --cl-border-strong:#34343c;
+  --cl-border-focus: #e5e5e5;
+  --cl-text:         #f4f4f5;
+  --cl-text-2:       #a1a1a8;
+  --cl-text-3:       #71717a;
+  --cl-text-4:       #52525b;
+  --cl-text-on-acc:  #0d0d0f;
+  --cl-accent:       #f4f4f5;
+  --cl-accent-hover: #ffffff;
+  --cl-accent-soft:  #1a1a1f;
+  --cl-indigo:       #818cf8;
+  --cl-indigo-soft:  #1e1b3e;
+  --cl-indigo-bdr:   #312e6e;
+  --cl-teal:         #5eead4;
+  --cl-teal-soft:    #042f2e;
+  --cl-teal-bdr:     #115e59;
+  --cl-amber:        #fbbf24;
+  --cl-amber-soft:   #3a2f0d;
+  --cl-amber-bdr:    #6b5012;
+  --cl-rose:         #fb7185;
+  --cl-rose-soft:    #3e0f1f;
+  --cl-rose-bdr:     #6b1531;
+  --cl-shadow-sm:    0 1px 2px rgba(0,0,0,0.4);
+  --cl-shadow-md:    0 4px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.5);
+  --cl-shadow-lg:    0 20px 50px -20px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.4);
+}
+
+/* Dark mode: form inputs sit on the base background (--cl-bg), recessed against
+   elevated cards (--cl-bg-elev). Covers all Mantine field components
+   (TextInput, Textarea, Select, PasswordInput, …) which share .mantine-Input-input.
+   Unlayered so it overrides Mantine's own layered input styles. */
+[data-mantine-color-scheme='dark'] .mantine-Input-input {
+  background-color: var(--cl-bg);
+}
+
+/* Dark mode: file upload control (Dropzone) uses the elevated surface.
+   Excludes the drag accept/reject states so their visual feedback is preserved. */
+[data-mantine-color-scheme='dark'] .mantine-Dropzone-root:not([data-accept]):not([data-reject]) {
+  background-color: var(--cl-bg-elev);
+}
+
+/* Dark mode: textareas use the elevated surface (overrides the input rule above,
+   which textareas also match via .mantine-Input-input). */
+[data-mantine-color-scheme='dark'] .mantine-Textarea-input {
+  background-color: var(--cl-bg-elev);
+}

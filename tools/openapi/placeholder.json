@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "WISPR API (placeholder)",
+    "version": "0.0.0",
+    "description": "Placeholder spec so RTK Query codegen is wired end-to-end. Replace schemaFile in openapi-config.ts with the real Swagger when the backend team delivers it (no code changes needed elsewhere)."
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Liveness probe",
+        "responses": {
+          "200": {
+            "description": "Service is up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "status": { "type": "string" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

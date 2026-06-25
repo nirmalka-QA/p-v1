@@ -1,0 +1,14 @@
+/*
+ * Shared page header for every phase. A single hairline divider separates the
+ * header from the content — compact spacing keeps it tight without crowding.
+ */
+.header {
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--cl-border);
+}
+
+/* Secondary row under the title (badges, counts, timestamps). */
+.meta {
+  margin-top: 6px;
+}

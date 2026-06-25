@@ -1,0 +1,32 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "custom-app",
+  "projectType": "application",
+  "sourceRoot": "apps/custom-app/src",
+  "tags": ["type:app", "scope:remote"],
+  "//": "Explicit targets (excluded from @nx/vite inference in nx.json): the @module-federation/vite config hangs Nx graph-node creation, so this remote runs Vite directly.",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vite", "cwd": "apps/custom-app" },
+      "continuous": true
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vite build", "cwd": "apps/custom-app" },
+      "outputs": ["{projectRoot}/dist"],
+      "cache": true
+    },
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vite preview --port 4201 --strictPort", "cwd": "apps/custom-app" },
+      "dependsOn": ["build"],
+      "continuous": true
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --noEmit -p tsconfig.app.json", "cwd": "apps/custom-app" },
+      "cache": true
+    }
+  }
+}

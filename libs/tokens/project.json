@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "tokens",
+  "projectType": "library",
+  "sourceRoot": "libs/tokens/src",
+  "tags": ["type:lib", "scope:shared"]
+}

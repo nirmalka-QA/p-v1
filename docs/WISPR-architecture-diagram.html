@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WISPR — Frontend System Architecture Diagram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14; --panel:#0f141c; --panel-2:#131a24; --sunken:#0c1118;
+  --bd:#1d2733; --bd-2:#2a3645;
+  --tx:#c5d0dc; --tx-2:#8a97a6; --tx-3:#5c6775; --tx-4:#414b58;
+  --ac:#4ec9b0; --in:#7aa2f7; --amber:#e0af68; --rose:#f7768e; --violet:#bb9af7;
+  --edge:#2a3645; --edge-hi:#4ec9b0;
+  --mono:'IBM Plex Mono',ui-monospace,monospace; --sans:'IBM Plex Sans',system-ui,sans-serif;
+}
+html[data-theme="light"]{
+  --bg:#f4f6f9; --panel:#ffffff; --panel-2:#f7f9fb; --sunken:#eef1f5;
+  --bd:#e2e7ee; --bd-2:#cfd8e3;
+  --tx:#1c2530; --tx-2:#55606e; --tx-3:#8a95a3; --tx-4:#aab3bf;
+  --ac:#0d7d6c; --in:#3b5bdb; --amber:#b8860b; --rose:#d6336c; --violet:#7048e8;
+  --edge:#cdd6e0; --edge-hi:#0d7d6c;
+}
+*{box-sizing:border-box}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.page{max-width:1440px;margin:0 auto;padding:28px 32px 90px}
+
+/* header */
+.head{border-bottom:1px solid var(--bd);padding-bottom:22px;margin-bottom:30px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ac);font-weight:600}
+h1{font-family:var(--mono);font-weight:700;font-size:26px;margin:12px 0 0;letter-spacing:-.01em}
+.sub{color:var(--tx-2);font-size:14px;margin-top:8px;max-width:640px}
+.themeBtn{font-family:var(--mono);font-size:11px;color:var(--tx-2);background:var(--panel);border:1px solid var(--bd);border-radius:7px;padding:7px 12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;flex-shrink:0}
+.themeBtn:hover{border-color:var(--bd-2);color:var(--tx)}
+.themeBtn svg{width:13px;height:13px}
+
+/* block titles */
+.block-h{display:flex;align-items:baseline;gap:12px;margin:38px 0 16px}
+.block-n{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ac)}
+.block-t{font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.01em}
+.block-d{color:var(--tx-3);font-size:12.5px;margin-left:auto;font-family:var(--mono)}
+
+/* diagram frames */
+.frame{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:8px;overflow:hidden}
+.scroller{overflow-x:auto}
+svg{display:block}
+svg text{font-family:var(--mono);fill:var(--tx)}
+
+/* static diagram node styles via classes on svg */
+.s-box{fill:var(--panel-2);stroke:var(--bd-2);stroke-width:1.2}
+.s-box.host{stroke:var(--ac)}
+.s-lane{fill:none;stroke:var(--bd);stroke-width:1;stroke-dasharray:3 4}
+.s-lbl{font-size:12.5px;font-weight:600;fill:var(--tx)}
+.s-sub{font-size:10px;fill:var(--tx-3)}
+.s-cap{font-size:10px;font-weight:700;letter-spacing:.12em;fill:var(--tx-4)}
+.s-edge{stroke:var(--edge);stroke-width:1.4;fill:none}
+.s-edge-lbl{font-size:9.5px;fill:var(--tx-3)}
+
+/* explorer layout */
+.explorer{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
+@media(max-width:980px){.explorer{grid-template-columns:1fr}}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--tx-2);background:var(--panel);border:1px solid var(--bd);border-radius:8px;padding:7px 13px;cursor:pointer;transition:all .15s}
+.tab:hover{border-color:var(--bd-2);color:var(--tx)}
+.tab.active{background:var(--ac);border-color:var(--ac);color:#04130f}
+.tab[data-stage="develop"].active{background:var(--ac);border-color:var(--ac)}
+.tab[data-stage="build"].active{background:var(--in);border-color:var(--in);color:#06122b}
+.tab[data-stage="deploy"].active{background:var(--violet);border-color:var(--violet);color:#150a26}
+.tab[data-stage="run"].active{background:var(--amber);border-color:var(--amber);color:#241a05}
+.tab[data-stage="observe"].active{background:var(--rose);border-color:var(--rose);color:#2a0810}
+
+/* explorer svg nodes */
+.node{cursor:pointer}
+.node .nbox{fill:var(--panel-2);stroke:var(--bd-2);stroke-width:1.3;transition:stroke .15s,opacity .15s,filter .15s}
+.node .nbar{transition:opacity .15s}
+.node .nlbl{font-size:11.5px;font-weight:600;fill:var(--tx)}
+.node .nsub{font-size:9px;fill:var(--tx-3)}
+.node:hover .nbox{stroke:var(--tx-3)}
+.node.sel .nbox{stroke:var(--ac);stroke-width:1.8;filter:drop-shadow(0 0 6px var(--ac-sft,rgba(78,201,176,.4)))}
+.node.dim{opacity:.28}
+.col-cap{font-size:10.5px;font-weight:700;letter-spacing:.1em;fill:var(--tx-4)}
+.col-rule{stroke:var(--bd);stroke-width:1;stroke-dasharray:2 5}
+.edge{stroke:var(--edge);stroke-width:1.4;fill:none;transition:stroke .15s,opacity .15s,stroke-width .15s}
+.edge.hi{stroke:var(--edge-hi);stroke-width:2}
+.edge.dim{opacity:.12}
+
+/* detail panel */
+.panel{position:sticky;top:18px;background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:20px;min-height:420px}
+.p-kicker{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ac)}
+.p-title{font-family:var(--mono);font-size:18px;font-weight:600;margin:9px 0 4px;letter-spacing:-.01em}
+.p-role{color:var(--tx-2);font-size:13.5px;line-height:1.6;margin:8px 0 16px}
+.p-sec{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-4);margin:16px 0 8px}
+.p-points{list-style:none;padding:0;margin:0}
+.p-points li{position:relative;padding-left:18px;margin:8px 0;font-size:13px;color:var(--tx);line-height:1.55}
+.p-points li::before{content:"▹";position:absolute;left:0;color:var(--ac);font-size:11px;top:1px}
+.p-points li code,.p-role code,.p-empty code{font-family:var(--mono);font-size:.86em;background:var(--ac-sft,rgba(78,201,176,.1));color:var(--ac);padding:1px 5px;border-radius:4px}
+.p-empty{color:var(--tx-3);font-size:13px;line-height:1.7}
+.p-empty b{color:var(--tx);font-weight:600}
+.p-hint{font-family:var(--mono);font-size:10.5px;color:var(--tx-4);margin-top:18px;border-top:1px solid var(--bd);padding-top:14px}
+.stage-summary{font-family:var(--mono);font-size:11.5px;color:var(--tx-2);margin-bottom:12px;min-height:18px}
+.stage-summary b{color:var(--tx)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:10.5px;color:var(--tx-3)}
+.lg{display:inline-flex;align-items:center;gap:6px}
+.lg i{width:10px;height:10px;border-radius:2px;display:inline-block}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-thumb{background:var(--bd-2);border-radius:6px;border:3px solid var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Frontend System Architecture</div>
+      <h1>WISPR Micro-Frontend Platform</h1>
+      <div class="sub">One shell, one active remote at a time. A static topology, and an interactive lifecycle map from develop → build → deploy → run → debug.</div>
+    </div>
+    <button class="themeBtn" id="themeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><span id="themeLbl">Light</span></button>
+  </div>
+
+  <!-- ============ STATIC HIGH-LEVEL ============ -->
+  <div class="block-h"><span class="block-n">A</span><span class="block-t">High-level topology</span><span class="block-d">runtime request path</span></div>
+  <div class="frame"><div class="scroller">
+    <svg viewBox="0 0 1120 470" width="100%" style="min-width:880px" role="img" aria-label="High-level runtime topology">
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--edge)"/></marker>
+      </defs>
+
+      <!-- edges (drawn first) -->
+      <path class="s-edge" marker-end="url(#ar)" d="M560,70 L560,104"/>
+      <text class="s-edge-lbl" x="568" y="92">https · app.wispr.com</text>
+      <path class="s-edge" marker-end="url(#ar)" d="M470,158 L300,204"/>
+      <path class="s-edge" marker-end="url(#ar)" d="M650,158 L820,204"/>
+      <text class="s-edge-lbl" x="300" y="180">/ (shell)</text>
+      <text class="s-edge-lbl" x="650" y="180">/remotes/&lt;type&gt;/*</text>
+      <!-- shell to singletons -->
+      <path class="s-edge" marker-end="url(#ar)" d="M300,262 L300,300"/>
+      <path class="s-edge" marker-end="url(#ar)" d="M820,262 L520,300" />
+      <text class="s-edge-lbl" x="360" y="292">provides singletons ▸</text>
+      <!-- shell to registry -->
+      <path class="s-edge" marker-end="url(#ar)" d="M380,233 L812,233"/>
+      <text class="s-edge-lbl" x="520" y="226">boot: resolve remote</text>
+      <!-- to infra row -->
+      <path class="s-edge" marker-end="url(#ar)" d="M250,330 L150,388"/>
+      <path class="s-edge" marker-end="url(#ar)" d="M340,340 L360,388"/>
+      <path class="s-edge" marker-end="url(#ar)" d="M430,330 L600,388"/>
+      <path class="s-edge" marker-end="url(#ar)" d="M620,330 L840,388"/>
+      <!-- shell to API -->
+      <path class="s-edge" marker-end="url(#ar)" d="M420,233 L1010,233 L1010,388"/>
+      <text class="s-edge-lbl" x="980" y="300">api.wispr.com</text>
+
+      <!-- nodes -->
+      <g>
+        <rect class="s-box" x="480" y="34" width="160" height="36" rx="8"/>
+        <text class="s-lbl" x="560" y="56" text-anchor="middle">Browser</text>
+      </g>
+      <g>
+        <rect class="s-box" x="450" y="106" width="220" height="50" rx="9"/>
+        <text class="s-lbl" x="560" y="128" text-anchor="middle">Azure Front Door</text>
+        <text class="s-sub" x="560" y="144" text-anchor="middle">single first-party edge</text>
+      </g>
+      <g>
+        <rect class="s-box host" x="200" y="206" width="200" height="56" rx="10"/>
+        <text class="s-lbl" x="300" y="230" text-anchor="middle">SHELL (host)</text>
+        <text class="s-sub" x="300" y="247" text-anchor="middle">router · auth · store · theme</text>
+      </g>
+      <g>
+        <rect class="s-box" x="720" y="206" width="200" height="56" rx="10"/>
+        <text class="s-lbl" x="820" y="230" text-anchor="middle">REMOTE · per type</text>
+        <text class="s-sub" x="820" y="247" text-anchor="middle">custom-app … testing</text>
+      </g>
+      <g>
+        <rect class="s-box" x="180" y="302" width="460" height="58" rx="10"/>
+        <text class="s-lbl" x="410" y="326" text-anchor="middle">Federation singletons</text>
+        <text class="s-sub" x="410" y="344" text-anchor="middle">React · RR7 · Redux · RTK Query · Mantine · services · store · mfe-runtime</text>
+      </g>
+      <g>
+        <rect class="s-box" x="700" y="302" width="220" height="58" rx="10"/>
+        <text class="s-lbl" x="810" y="326" text-anchor="middle">Remote registry</text>
+        <text class="s-sub" x="810" y="344" text-anchor="middle">JSON · type → url@version</text>
+      </g>
+      <!-- infra row -->
+      <text class="s-cap" x="40" y="404">PLATFORM</text>
+      <g><rect class="s-box" x="70" y="390" width="160" height="48" rx="9"/><text class="s-lbl" x="150" y="411" text-anchor="middle">Entra ID</text><text class="s-sub" x="150" y="427" text-anchor="middle">OIDC · SSO</text></g>
+      <g><rect class="s-box" x="280" y="390" width="160" height="48" rx="9"/><text class="s-lbl" x="360" y="411" text-anchor="middle">App Config</text><text class="s-sub" x="360" y="427" text-anchor="middle">feature flags</text></g>
+      <g><rect class="s-box" x="520" y="390" width="160" height="48" rx="9"/><text class="s-lbl" x="600" y="411" text-anchor="middle">App Insights</text><text class="s-sub" x="600" y="427" text-anchor="middle">telemetry</text></g>
+      <g><rect class="s-box" x="760" y="390" width="160" height="48" rx="9"/><text class="s-lbl" x="840" y="411" text-anchor="middle">Key Vault</text><text class="s-sub" x="840" y="427" text-anchor="middle">secrets</text></g>
+      <g><rect class="s-box host" x="950" y="390" width="140" height="48" rx="9"/><text class="s-lbl" x="1020" y="411" text-anchor="middle">API</text><text class="s-sub" x="1020" y="427" text-anchor="middle">backend</text></g>
+    </svg>
+  </div></div>
+
+  <!-- ============ INTERACTIVE LIFECYCLE ============ -->
+  <div class="block-h"><span class="block-n">B</span><span class="block-t">Lifecycle explorer</span><span class="block-d">click a node · filter by stage</span></div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-stage="all">All</button>
+    <button class="tab" data-stage="develop">Develop</button>
+    <button class="tab" data-stage="build">Build</button>
+    <button class="tab" data-stage="deploy">Deploy</button>
+    <button class="tab" data-stage="run">Run · Infra</button>
+    <button class="tab" data-stage="observe">Observe · Debug</button>
+  </div>
+  <div class="stage-summary" id="stageSummary"></div>
+
+  <div class="explorer">
+    <div class="frame"><div class="scroller">
+      <svg id="graph" viewBox="0 0 1360 700" width="100%" style="min-width:1080px" role="img" aria-label="Interactive lifecycle diagram"></svg>
+    </div>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--ac)"></i>Develop</span>
+      <span class="lg"><i style="background:var(--in)"></i>Build</span>
+      <span class="lg"><i style="background:var(--violet)"></i>Deploy</span>
+      <span class="lg"><i style="background:var(--amber)"></i>Run / Infra</span>
+      <span class="lg"><i style="background:var(--rose)"></i>Observe / Debug</span>
+    </div>
+    </div>
+
+    <aside class="panel" id="panel" aria-live="polite">
+      <div class="p-empty">
+        <b>Pick any node</b> to see what it is, why it's there, and how it connects across the lifecycle.<br><br>
+        Use the <b>stage tabs</b> above to light up just the <code>develop</code>, <code>build</code>, <code>deploy</code>, <code>run</code>, or <code>observe</code> path. Edges touching the focused stage are highlighted; everything else dims.
+        <div class="p-hint">tip — the static map above is the runtime request path; this map is the full delivery flow.</div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ===== column model ===== */
+const COLS = [
+  {key:'develop', label:'DEVELOP',         hue:'var(--ac)'},
+  {key:'build',   label:'BUILD',           hue:'var(--in)'},
+  {key:'deploy',  label:'DEPLOY',          hue:'var(--violet)'},
+  {key:'run',     label:'RUN · INFRA',     hue:'var(--amber)'},
+  {key:'observe', label:'OBSERVE · DEBUG', hue:'var(--rose)'},
+];
+const COLW=264, NODEW=228, NODEH=54, ROWGAP=66, TOP=58, X0=18;
+const colIndex = Object.fromEntries(COLS.map((c,i)=>[c.key,i]));
+const colX = i => X0 + i*COLW;
+const rowY = r => TOP + r*ROWGAP;
+
+/* ===== nodes ===== */
+const NODES = [
+  // develop
+  {id:'nx',  col:'develop', row:0, label:'Nx monorepo', sub:'npm · TS strict'},
+  {id:'libs',col:'develop', row:1, label:'Source libs', sub:'tsconfig aliases · HMR'},
+  {id:'std', col:'develop', row:2, label:'Standalone dev', sub:'per-remote bootstrap'},
+  // build
+  {id:'vite',col:'build', row:0, label:'Vite + MF 2.0', sub:'@module-federation/vite'},
+  {id:'codegen',col:'build', row:1, label:'OpenAPI codegen', sub:'RTK Query endpoints'},
+  {id:'pub',col:'build', row:2, label:'Publish vs bundle', sub:'contracts/ui/tokens'},
+  // deploy
+  {id:'pipe',col:'deploy', row:0, label:'Azure Pipelines', sub:'Nx affected + cache'},
+  {id:'artifacts',col:'deploy', row:1, label:'Azure Artifacts', sub:'private npm'},
+  {id:'swa',col:'deploy', row:2, label:'Static Web Apps', sub:'one per app'},
+  {id:'blob',col:'deploy', row:3, label:'Remote registry', sub:'Blob / App Config JSON'},
+  // run / infra
+  {id:'browser',col:'run', row:0, label:'Browser', sub:'SPA client'},
+  {id:'fd',col:'run', row:1, label:'Azure Front Door', sub:'app.wispr.com edge'},
+  {id:'shell',col:'run', row:2, label:'Shell (host)', sub:'router · store · theme'},
+  {id:'remotes',col:'run', row:3, label:'Remotes', sub:'7 project types'},
+  {id:'single',col:'run', row:4, label:'Federation singletons', sub:'React · RR · Redux · Mantine'},
+  {id:'entra',col:'run', row:5, label:'Entra ID', sub:'OIDC + SSO'},
+  {id:'flags',col:'run', row:6, label:'App Configuration', sub:'feature flags'},
+  {id:'api',col:'run', row:7, label:'API', sub:'api.wispr.com'},
+  // observe / debug
+  {id:'insights',col:'observe', row:0, label:'Application Insights', sub:'telemetry · traces'},
+  {id:'errbound',col:'observe', row:1, label:'Remote ErrorBoundary', sub:'crash isolation'},
+  {id:'maps',col:'observe', row:2, label:'Sourcemaps', sub:'per-remote debug'},
+  {id:'rollback',col:'observe', row:3, label:'Registry rollback', sub:'edit JSON · no rebuild'},
+];
+const N = Object.fromEntries(NODES.map(n=>{
+  const ci=colIndex[n.col];
+  return [n.id, {...n, x:colX(ci), y:rowY(n.row), w:NODEW, h:NODEH, hue:COLS[ci].hue}];
+}));
+
+/* ===== edges ===== */
+const E = [
+  ['nx','vite','build'],['libs','vite','build'],['codegen','api','build'],
+  ['vite','swa','deploy'],['pub','artifacts','deploy'],['pipe','swa','deploy'],['pipe','artifacts','deploy'],['artifacts','libs','develop'],
+  ['blob','shell','run'],['swa','fd','deploy'],
+  ['browser','fd','run'],['fd','shell','run'],['shell','remotes','run'],['shell','single','run'],['remotes','single','run'],
+  ['shell','entra','run'],['shell','flags','run'],['shell','api','run'],['remotes','api','run'],
+  ['shell','insights','observe'],['remotes','insights','observe'],['errbound','remotes','observe'],['rollback','blob','observe'],['std','remotes','develop'],
+];
+
+/* ===== detail copy ===== */
+const D = {
+  nx:{k:'Develop',role:'The Nx monorepo holding every app and lib, with npm workspaces and strict TypeScript.',pts:['Apps: <code>shell</code> + 7 remotes; libs: contracts, ui, tokens, services, store, mfe-runtime, utils.','Dependency graph powers <code>nx affected</code> so only changed projects build/test.','One <code>tsconfig.base.json</code> defines <code>@wispr/*</code> path aliases shared everywhere.']},
+  libs:{k:'Develop',role:'Shared libraries consumed as non-buildable source in dev — the fix for the "rebuild a remote to propagate a change" pain.',pts:['Resolved via TS path aliases, so a change in <code>libs/ui</code> hot-reloads in the shell and every running remote with <b>zero rebuild</b>.','Same source is published or federated differently at deploy time (see Build).']},
+  std:{k:'Develop',role:'Each remote ships a <code>bootstrap.standalone.tsx</code> so it runs fully in isolation.',pts:['Wraps the remote in its own MantineProvider + mock contract + mock store.','Primary fast inner loop — develop a remote without booting the shell.','Devs pick which remotes to boot: one, several, or all.']},
+  vite:{k:'Build',role:'Vite with <code>@module-federation/vite</code> (Module Federation 2.0) compiles the shell as host and each remote as a federated module.',pts:['Each remote exposes exactly one entry: <code>./ProjectApp</code>.','Produces an <code>mf-manifest.json</code> with version + contract metadata.','Singletons (React, RR, Redux, Mantine, @wispr/*) declared shared so one instance is used at runtime.']},
+  codegen:{k:'Build',role:'<code>@rtk-query/codegen-openapi</code> generates typed RTK Query endpoints from the backend OpenAPI spec.',pts:['Wired now against a placeholder spec; flip to real Swagger on delivery.','Generated endpoints inject into the single shared <code>api</code> in <code>@wispr/services</code>.']},
+  pub:{k:'Build',role:'Decides how each lib leaves the build: published, federated, or bundled.',pts:['<code>contracts</code>, <code>ui</code>, <code>tokens</code> → published + semver to Azure Artifacts (independent version pinning).','<code>services</code>, <code>store</code>, <code>mfe-runtime</code> → runtime federation singletons (not published).','<code>utils</code> → bundled into consumers.']},
+  pipe:{k:'Deploy',role:'Azure Pipelines runs CI/CD with Nx affected + cache.',pts:['Only changed apps/libs build and test.','Publishes contracts/ui/tokens to Artifacts on semver bump.','Per-remote deploy jobs push to each Static Web App and update the registry entry.']},
+  artifacts:{k:'Deploy',role:'Azure Artifacts — the private npm registry for the published shared libs.',pts:['Hosts <code>@wispr/contracts|ui|tokens</code>.','Lets a remote pin a contract/UI version and deploy on its own timeline.']},
+  swa:{k:'Deploy',role:'Azure Static Web Apps — one per app (shell + each remote) for independent deploys.',pts:['Each remote deploys without touching the shell.','Preview environments per PR.','Served behind Front Door under the single parent domain.']},
+  blob:{k:'Deploy',role:'The remote registry: a small JSON mapping project type → remote entry + version.',pts:['Lives in Blob Storage or App Configuration.','Shell fetches it at boot to resolve which remote URL/version to load.','Editing it points to a new version or rolls back — with no shell rebuild.']},
+  browser:{k:'Run',role:'The SPA client. Loads the shell first, then the active remote on demand.',pts:['Only the active project type\u2019s bundle is fetched.','Deep links and hard refresh re-resolve the correct remote + phase.']},
+  fd:{k:'Run',role:'Azure Front Door — the single first-party edge.',pts:['<code>app.wispr.com/*</code> → shell; <code>/remotes/&lt;type&gt;/*</code> → each remote SWA; <code>api.wispr.com</code> → API.','One parent domain keeps the auth cookie first-party.']},
+  shell:{k:'Run',role:'The host. Owns the one router, one Redux store, one RTK Query cache, one Mantine theme, and all auth.',pts:['Splat route <code>/p/:projectId/*</code> → ProjectHost resolves type → lazy-loads the remote.','Runs OIDC, silent refresh, RBAC; passes a read-only contract to the remote.','Provides all federation singletons; remotes never create their own.']},
+  remotes:{k:'Run',role:'One micro-frontend per project type, each with its own phase rail and working surfaces.',pts:['Render relative <code>&lt;Routes&gt;</code> into the shell\u2019s router — no own router.','Consume the shell\u2019s store/theme/services via singletons.','Advertise a <code>contractVersion</code>; mismatch → graceful fallback.']},
+  single:{k:'Run',role:'The shared runtime instances every app uses.',pts:['React, react-router-dom, Redux Toolkit, react-redux, Mantine.','<code>@wispr/services</code> (one Axios + RTK Query cache), <code>@wispr/store</code> (one Redux store), <code>@wispr/mfe-runtime</code>.','Singleton config is the #1 correctness requirement.']},
+  entra:{k:'Run',role:'Microsoft Entra ID — the OIDC + SSO identity provider. Auth is shell-only.',pts:['Authorization Code + PKCE; access token kept in memory, refresh token in an httpOnly cookie.','Single-flight silent refresh on 401; logout shell-only.']},
+  flags:{k:'Run',role:'Azure App Configuration + Feature Management — the feature-flag service.',pts:['Injected to remotes via the contract <code>services.flags</code>.','Gates whether a remote or a phase is shown.']},
+  api:{k:'Run',role:'The backend at <code>api.wispr.com</code>, called through the shared Axios instance.',pts:['Shared interceptor adds auth + workspace + trace headers, <code>withCredentials</code>.','Errors normalized to one shape; 401 → single-flight refresh + replay.','Contract is TBD — zod is the interim source of truth.']},
+  insights:{k:'Observe',role:'Application Insights — telemetry and tracing (future scope, injection point present now).',pts:['Exposed as <code>services.telemetry</code> via the contract.','Collects errors and traces from shell and remotes for debugging.']},
+  errbound:{k:'Observe',role:'A shell-side ErrorBoundary wrapping every remote — crash isolation.',pts:['A remote that throws shows a fallback; the shell stays up.','Pairs with <code>contractVersion</code> checks for graceful incompatibility handling.']},
+  maps:{k:'Observe',role:'Per-remote sourcemaps so a federated remote is debuggable in production.',pts:['Each remote is built and deployed independently, so it carries its own maps.','Combined with standalone dev mode for fast local repro of a remote bug.']},
+  rollback:{k:'Observe',role:'Rollback by editing the registry JSON — no rebuild, no redeploy of the shell.',pts:['Point a project type back to a previous remote version instantly.','MF 2.0 version pinning enforces singleton/contract compatibility on load.']},
+};
+
+/* ===== render graph ===== */
+const svg=document.getElementById('graph');
+const NS='http://www.w3.org/2000/svg';
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+
+// column captions + rules
+COLS.forEach((c,i)=>{
+  const x=colX(i);
+  const cap=el('text',{class:'col-cap',x:x+4,y:30}); cap.textContent=c.label; svg.appendChild(cap);
+  if(i>0){ svg.appendChild(el('line',{class:'col-rule',x1:x-18,y1:40,x2:x-18,y2:680})); }
+});
+
+// edges
+const edgeEls=[];
+E.forEach(([from,to,stage])=>{
+  const a=N[from], b=N[to];
+  const ax=a.x+a.w, ay=a.y+a.h/2, bx=b.x, by=b.y+b.h/2;
+  // if same column (vertical flow) connect bottom->top
+  let d;
+  if(a.col===b.col){
+    const x=a.x+a.w/2;
+    d=`M${x},${a.y+a.h} C ${x},${a.y+a.h+22} ${x},${b.y-22} ${x},${b.y}`;
+  } else if(b.x>=a.x+a.w){ // left to right
+    const mx=(ax+bx)/2;
+    d=`M${ax},${ay} C ${mx},${ay} ${mx},${by} ${bx},${by}`;
+  } else { // right to left (back-edge, e.g. artifacts->libs, blob->shell)
+    const ax2=a.x, bx2=b.x+b.w, mx=(ax2+bx2)/2;
+    d=`M${ax2},${ay} C ${mx},${ay} ${mx},${by} ${bx2},${by}`;
+  }
+  const p=el('path',{class:'edge',d,'data-from':from,'data-to':to,'data-stage':stage});
+  svg.appendChild(p); edgeEls.push(p);
+});
+
+// nodes
+NODES.forEach(n=>{
+  const m=N[n.id];
+  const g=el('g',{class:'node','data-id':n.id,tabindex:'0',role:'button','aria-label':n.label});
+  g.appendChild(el('rect',{class:'nbar',x:m.x,y:m.y,width:4,height:m.h,rx:2,fill:m.hue}));
+  g.appendChild(el('rect',{class:'nbox',x:m.x,y:m.y,width:m.w,height:m.h,rx:9}));
+  const t1=el('text',{class:'nlbl',x:m.x+16,y:m.y+23}); t1.textContent=n.label; g.appendChild(t1);
+  const t2=el('text',{class:'nsub',x:m.x+16,y:m.y+39}); t2.textContent=n.sub; g.appendChild(t2);
+  svg.appendChild(g);
+  g.addEventListener('click',()=>selectNode(n.id));
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectNode(n.id);}});
+});
+
+/* ===== interactions ===== */
+const nodeEls=[...svg.querySelectorAll('.node')];
+const panel=document.getElementById('panel');
+let activeStage='all', selected=null;
+
+function clearHighlights(){
+  nodeEls.forEach(g=>g.classList.remove('sel','dim'));
+  edgeEls.forEach(p=>p.classList.remove('hi','dim'));
+}
+function applyStage(stage){
+  activeStage=stage; selected=null;
+  clearHighlights();
+  const sm=document.getElementById('stageSummary');
+  if(stage==='all'){ sm.innerHTML=''; return; }
+  const inStage=id=>N[id].col===stage;
+  nodeEls.forEach(g=>{ if(!inStage(g.dataset.id)) g.classList.add('dim'); });
+  edgeEls.forEach(p=>{
+    const touch=inStage(p.dataset.from)||inStage(p.dataset.to)||p.dataset.stage===stage;
+    p.classList.toggle('hi', p.dataset.stage===stage);
+    p.classList.toggle('dim', !touch);
+  });
+  const SUM={
+    develop:'<b>Develop</b> — Nx monorepo, source libs with instant HMR, and standalone per-remote dev.',
+    build:'<b>Build</b> — Vite + Module Federation, OpenAPI codegen, and the publish/federate/bundle split.',
+    deploy:'<b>Deploy</b> — Nx-affected Pipelines push each app to its own Static Web App and update the registry.',
+    run:'<b>Run</b> — Browser → Front Door → shell → lazy-loaded remote, sharing one set of singletons; Entra/flags/API alongside.',
+    observe:'<b>Observe / Debug</b> — App Insights, per-remote ErrorBoundary + sourcemaps, and instant registry rollback.'
+  };
+  sm.innerHTML=SUM[stage]||'';
+}
+function selectNode(id){
+  selected=id;
+  clearHighlights();
+  const connected=new Set([id]);
+  edgeEls.forEach(p=>{
+    const hit=p.dataset.from===id||p.dataset.to===id;
+    p.classList.toggle('hi',hit); p.classList.toggle('dim',!hit);
+    if(hit){connected.add(p.dataset.from);connected.add(p.dataset.to);}
+  });
+  nodeEls.forEach(g=>{
+    g.classList.toggle('sel',g.dataset.id===id);
+    g.classList.toggle('dim',!connected.has(g.dataset.id));
+  });
+  const d=D[id], n=N[id];
+  panel.innerHTML=`
+    <div class="p-kicker">${d.k}</div>
+    <div class="p-title">${n.label}</div>
+    <div class="p-role">${d.role}</div>
+    <div class="p-sec">Key points</div>
+    <ul class="p-points">${d.pts.map(p=>`<li>${p}</li>`).join('')}</ul>
+    <div class="p-hint">connected nodes highlighted · pick a stage tab to reset</div>`;
+}
+
+/* tabs */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    applyStage(t.dataset.stage);
+    if(t.dataset.stage!=='all'){
+      panel.innerHTML=`<div class="p-kicker">Stage</div><div class="p-title" style="text-transform:capitalize">${t.dataset.stage}</div><div class="p-role">${document.getElementById('stageSummary').textContent}</div><div class="p-hint">click any lit node for detail</div>`;
+    }
+  });
+});
+
+/* theme */
+const themeBtn=document.getElementById('themeBtn'),themeLbl=document.getElementById('themeLbl');
+function applyTheme(t){document.documentElement.dataset.theme=t;themeLbl.textContent=t==='dark'?'Light':'Dark';try{localStorage.setItem('wispr-arch-theme',t)}catch(e){}}
+themeBtn.addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+try{const s=localStorage.getItem('wispr-arch-theme');if(s)applyTheme(s);}catch(e){}
+</script>
+</body>
+</html>

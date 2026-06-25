@@ -1,0 +1,16 @@
+/* Workspace-home two-column layout — the prototype's .ws-cols (project list on the
+   left, artifact library aside on the right; stacks on narrow viewports). */
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+@media (max-width: 980px) {
+  .cols {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

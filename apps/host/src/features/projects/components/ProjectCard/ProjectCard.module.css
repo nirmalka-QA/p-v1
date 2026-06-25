@@ -1,0 +1,69 @@
+/* In-workspace project list item — the prototype's .prow (a horizontal row, not a
+   grid card): logo · name/desc/meta · type chip + actions menu. */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-md);
+  background: var(--cl-bg-elev);
+  cursor: pointer;
+  transition: all var(--cl-ease);
+}
+.row:hover {
+  border-color: var(--cl-border-strong);
+  box-shadow: var(--cl-shadow-sm);
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+.name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cl-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.desc {
+  font-size: 11px;
+  color: var(--cl-text-3);
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.meta {
+  font-size: 10px;
+  font-family: var(--cl-mono);
+  color: var(--cl-text-4);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.phaseDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--mantine-color-teal-6);
+  flex-shrink: 0;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.typeChip {
+  font-family: var(--cl-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}

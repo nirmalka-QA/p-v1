@@ -1,0 +1,13 @@
+/* Project history card — subtle lift + border emphasis on hover. */
+.card {
+  transition:
+    border-color var(--cl-ease),
+    box-shadow var(--cl-ease),
+    transform var(--cl-ease);
+}
+
+.card:hover {
+  border-color: var(--cl-border-strong);
+  box-shadow: var(--cl-shadow-sm);
+  transform: translateY(-2px);
+}

@@ -1,0 +1,8 @@
+.card {
+  transition: border-color var(--cl-ease);
+}
+
+/* Highlight the panel border while dragging files over it. */
+.card.dropping {
+  border-color: var(--cl-accent);
+}

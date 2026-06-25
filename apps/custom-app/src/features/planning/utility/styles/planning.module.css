@@ -1,0 +1,48 @@
+/* Feature-id caption under each Planning sidebar item (shared NavLink hover/
+   active styling lives in components/layout/SidebarNav.module.css). */
+.navId {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--cl-text-4);
+  letter-spacing: 0.04em;
+}
+
+/* Drag-and-drop reorder rows (Reorder mode in the sidebar). */
+.dragRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  margin-bottom: 2px;
+  border-radius: var(--cl-radius);
+  border: 1px solid transparent;
+  cursor: grab;
+  transition: background-color var(--cl-ease), border-color var(--cl-ease);
+}
+.dragRow:hover {
+  background-color: var(--cl-bg-hover);
+}
+.dragRow:active {
+  cursor: grabbing;
+}
+.dragRowActive {
+  opacity: 0.4;
+}
+.dragRowOver {
+  border-color: var(--mantine-color-indigo-5);
+  background-color: var(--cl-surface-3);
+}
+.dragHandle {
+  color: var(--cl-text-4);
+  flex-shrink: 0;
+}
+
+/* Suggestion card hover lift (matches KB note card affordance). */
+.suggestionCard {
+  transition: border-color var(--cl-ease), box-shadow var(--cl-ease), transform var(--cl-ease);
+}
+.suggestionCard:hover {
+  border-color: var(--cl-border-strong);
+  box-shadow: var(--cl-shadow-sm);
+  transform: translateY(-1px);
+}

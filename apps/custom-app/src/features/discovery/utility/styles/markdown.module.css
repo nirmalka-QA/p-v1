@@ -1,0 +1,89 @@
+/* Styles the HTML produced by react-markdown (not raw TSX elements). */
+.markdown {
+  font-size: 14px;
+  color: var(--cl-text);
+  line-height: 1.7;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  font-weight: 600;
+  color: var(--cl-text);
+  letter-spacing: -0.01em;
+}
+.markdown h1 { font-size: 18px; margin: 20px 0 10px; }
+.markdown h2 { font-size: 15px; margin: 18px 0 8px; }
+.markdown h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cl-text-3);
+  margin: 16px 0 8px;
+}
+
+.markdown p { margin-bottom: 12px; }
+
+.markdown ul,
+.markdown ol { padding-left: 20px; margin-bottom: 12px; }
+.markdown li { margin-bottom: 5px; color: var(--cl-text-2); }
+.markdown li strong { color: var(--cl-text); }
+
+.markdown strong { color: var(--cl-text); font-weight: 600; }
+.markdown em { font-style: italic; }
+
+.markdown code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: var(--cl-surface-2);
+  border: 1px solid var(--cl-border);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--cl-text);
+}
+
+.markdown pre {
+  background: var(--cl-bg-sunken);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-md);
+  padding: 14px 16px;
+  overflow-x: auto;
+  margin-bottom: 14px;
+}
+.markdown pre code { background: none; border: none; padding: 0; font-size: 12px; line-height: 1.75; }
+
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+.markdown th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--cl-text-3);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--cl-border-strong);
+  text-align: left;
+  background: var(--cl-surface-2);
+}
+.markdown td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--cl-border);
+  color: var(--cl-text-2);
+  vertical-align: top;
+}
+.markdown tr:last-child td { border-bottom: none; }
+
+.markdown blockquote {
+  border-left: 3px solid var(--cl-border-strong);
+  margin: 0 0 12px;
+  padding: 10px 16px;
+  color: var(--cl-text-2);
+  font-style: italic;
+  background: var(--cl-surface-2);
+  border-radius: 0 var(--cl-radius) var(--cl-radius) 0;
+}

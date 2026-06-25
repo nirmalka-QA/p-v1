@@ -1,0 +1,82 @@
+/* Strategy phase rail — equal-width segments split by hairlines, active step carries
+   a bottom accent bar. Mirrors the prototype's `.phase-rail`/`.pstep`. */
+.rail {
+  display: flex;
+  align-items: stretch;
+  background: var(--cl-bg-elev);
+  border-bottom: 1px solid var(--cl-border);
+  flex-shrink: 0;
+  overflow-x: auto;
+  z-index: 40;
+}
+
+.step {
+  flex: 1 1 0;
+  min-width: 132px;
+  display: block;
+  text-align: left;
+  padding: 10px 16px 8px;
+  border-right: 1px solid var(--cl-border);
+  cursor: pointer;
+  position: relative;
+  transition: background var(--cl-ease);
+  user-select: none;
+}
+.step:last-child {
+  border-right: none;
+}
+.step:hover {
+  background: var(--cl-surface-2);
+}
+
+.active {
+  background: var(--cl-surface-2);
+}
+.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--cl-accent);
+}
+
+.num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--cl-text-4);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+.active .num {
+  color: var(--cl-text-2);
+}
+.wip .num {
+  color: var(--cl-accent);
+}
+.done .num {
+  color: var(--cl-teal);
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cl-text);
+  line-height: 1.25;
+  margin-bottom: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  font-size: 10px;
+  color: var(--cl-text-3);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

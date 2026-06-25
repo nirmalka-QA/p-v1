@@ -1,0 +1,26 @@
+/* Danger/attention accents for the change-impact surfaces. Tones come from the
+   project tokens (rose = critical, amber = warning) — never hardcoded. */
+.alertCard {
+  border-left: 3px solid var(--cl-border);
+}
+.alertCritical {
+  border-left-color: var(--cl-rose);
+  background: var(--cl-rose-soft);
+}
+.alertWarning {
+  border-left-color: var(--cl-amber);
+  background: var(--cl-amber-soft);
+}
+.alertInfo {
+  border-left-color: var(--cl-border-strong);
+}
+
+/* Resolved alerts read as muted history. */
+.alertResolved {
+  opacity: 0.6;
+}
+
+/* Clickable "needs review" badge on artifact cards. */
+.reviewBadge {
+  cursor: pointer;
+}

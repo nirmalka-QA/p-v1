@@ -1,0 +1,12 @@
+.context {
+  background: var(--cl-bg-elev);
+  border: 1px solid var(--cl-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+/* Preserve line breaks and wrap freely — context is shown in full, never truncated. */
+.body {
+  white-space: pre-wrap;
+  word-break: break-word;
+}

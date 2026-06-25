@@ -1,0 +1,107 @@
+/* Two-pane settings modal: left menu + right content. */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 480px;
+}
+
+.menu {
+  background: var(--cl-bg-sunken);
+  border-right: 1px solid var(--cl-border);
+  padding: 16px 10px;
+}
+.menuTitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cl-text-3);
+  font-weight: 600;
+  padding: 0 8px 2px;
+}
+.menuProject {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cl-text);
+  padding: 0 8px 14px;
+}
+
+/* On-theme NavLink (neutral surface + accent bar, no indigo). */
+.navRoot {
+  border-radius: var(--cl-radius);
+  border-left: 2px solid transparent;
+  transition: background-color var(--cl-ease), border-color var(--cl-ease);
+}
+.navRoot:hover {
+  background-color: var(--cl-bg-hover);
+}
+.navRoot[data-active],
+.navRoot[data-active]:hover {
+  background-color: var(--cl-surface-3);
+  border-left-color: var(--cl-accent);
+}
+.navLabel {
+  font-size: 13px;
+  color: var(--cl-text-2);
+}
+.navRoot[data-active] .navLabel {
+  color: var(--cl-text);
+  font-weight: 500;
+}
+
+.panel {
+  padding: 22px 26px;
+  max-height: 72vh;
+  overflow-y: auto;
+}
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.panelTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cl-text);
+  letter-spacing: -0.01em;
+}
+
+/* Integrations list */
+.intRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--cl-border);
+}
+.intRow:last-child {
+  border-bottom: none;
+}
+.intLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.glyph {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+/* Brand colours (intentional literal brand values, not theme tokens). */
+.gh { background: #24292e; }
+.fg { background: #f24e1e; }
+.sl { background: #611f69; }
+.vc { background: #000000; }
+.aw { background: #ff9900; color: #000; }
+.ln { background: #5e6ad2; }
+.sn { background: #362d59; }
+.no { background: #ffffff; color: #000; border: 1px solid var(--cl-border); }
+[data-mantine-color-scheme='dark'] .gh { background: #f0f6fc; color: #0d1117; }

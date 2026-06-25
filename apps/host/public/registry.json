@@ -1,0 +1,14 @@
+{
+  "data-pipeline": {
+    "entry": "http://localhost:4202/mf-manifest.json",
+    "version": "1.0.0"
+  },
+  "strategy": {
+    "entry": "http://localhost:4203/mf-manifest.json",
+    "version": "1.0.0"
+  },
+  "custom-app": {
+    "entry": "http://localhost:4201/mf-manifest.json",
+    "version": "1.0.0"
+  }
+}

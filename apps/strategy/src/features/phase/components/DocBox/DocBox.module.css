@@ -1,0 +1,17 @@
+/* A grouping "tray" for a document title (a mandatory requirement, or the Additional
+   set). A light sunken fill groups its file chips without adding another border. */
+.box {
+  background: var(--cl-bg-sunken);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.head {
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cl-text);
+}

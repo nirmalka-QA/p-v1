@@ -1,0 +1,19 @@
+/* Pulsing red ring while actively listening, signalling a live recording. */
+.listening {
+  animation: dictationPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes dictationPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mantine-color-red-6) 50%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--mantine-color-red-6) 0%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .listening {
+    animation: none;
+  }
+}

@@ -1,0 +1,84 @@
+.inner {
+  padding: 14px 12px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cl-text-3);
+  padding: 4px 8px 6px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cl-text-2);
+  transition: all var(--cl-ease);
+}
+.item:hover {
+  background: var(--cl-bg-hover);
+  color: var(--cl-text);
+}
+.itemActive,
+.itemActive:hover {
+  background: var(--cl-surface-2);
+  color: var(--cl-text);
+}
+
+.divider {
+  height: 1px;
+  background: var(--cl-border);
+  margin: 12px 4px;
+}
+
+.intRow {
+  padding: 6px 8px;
+}
+.intMark {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--cl-text);
+  background: var(--cl-surface-2);
+  border: 1px solid var(--cl-border);
+}
+.intName {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cl-text);
+}
+.intOn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cl-teal);
+}
+.intOff {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cl-text-3);
+}

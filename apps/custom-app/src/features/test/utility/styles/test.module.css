@@ -1,0 +1,27 @@
+/* Test-case card hover lift (matches the story card affordance). */
+.testCard {
+  transition: border-color var(--cl-ease), box-shadow var(--cl-ease);
+}
+.testCard:hover {
+  border-color: var(--cl-border-strong);
+  box-shadow: var(--cl-shadow-sm);
+}
+
+/* Test-case title acts as the "expand details" affordance. */
+.testTitleBtn {
+  display: block;
+  text-align: left;
+}
+.testTitleBtn:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Sticky toolbar (filters + actions) above the scrolling test-case list. */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--cl-bg);
+  padding-bottom: 12px;
+}

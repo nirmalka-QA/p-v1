@@ -1,0 +1,14 @@
+/* Recent-activity rows — the prototype's .act-row (divider between rows, a
+   project-type accent dot leading each entry). */
+.row {
+  border-bottom: 1px solid var(--cl-border);
+}
+.row:last-child {
+  border-bottom: none;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}

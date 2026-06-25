@@ -1,0 +1,35 @@
+/* Story card hover lift (matches the note / suggestion card affordance). */
+.storyCard {
+  transition: border-color var(--cl-ease), box-shadow var(--cl-ease);
+}
+.storyCard:hover {
+  border-color: var(--cl-border-strong);
+  box-shadow: var(--cl-shadow-sm);
+}
+
+/* Clickable impact flag — opens the AI impact report. */
+.impactBadge {
+  cursor: pointer;
+}
+
+/* Story title acts as the "open detail" affordance. */
+.storyTitleBtn {
+  display: block;
+  text-align: left;
+}
+.storyTitleBtn:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Sticky toolbar (filters + bulk bar) above the scrolling story list. */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--cl-bg);
+  padding-bottom: 12px;
+}
+
+/* Shared feature-list nav row styling now lives in
+   components/layout/SidebarNav.module.css. */

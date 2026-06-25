@@ -1,0 +1,31 @@
+/*
+ * Shared styling for the phase-sidebar NavLinks (Discovery / Planning / Features
+ * / Implementation). Single source of truth so hover and active states stay
+ * identical across every phase. Compose `.navRootStacked` on the root for
+ * two-line items (label + description) to top-align the left section.
+ */
+.navRoot {
+  border-radius: var(--cl-radius);
+  transition: background-color var(--cl-ease);
+}
+.navRoot:hover {
+  background-color: var(--cl-bg-hover);
+}
+.navRoot[data-active],
+.navRoot[data-active]:hover {
+  background-color: var(--cl-surface-3);
+}
+
+/* Two-line items align the icon/swatch to the top of the row. */
+.navRootStacked {
+  align-items: flex-start;
+}
+
+.navLabel {
+  font-size: 13px;
+  color: var(--cl-text-2);
+}
+.navRoot[data-active] .navLabel {
+  color: var(--cl-text);
+  font-weight: 600;
+}

@@ -1,0 +1,28 @@
+variables:
+  - name: buildConfiguration
+    value: 'Release'
+  - name: buildOutputFolder
+    value: 'apps/custom-app/dist'
+
+stages:
+  - stage: __default
+    jobs:
+      - job: Job
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: UseNode@1
+            inputs:
+              version: '24.x'
+          - task: Npm@1
+            inputs:
+              command: 'ci'
+          - task: Npm@1
+            inputs:
+              command: 'custom'
+              customCommand: 'run build:custom-app'
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(buildOutputFolder)'
+              artifactName: custom-app
+            displayName: 'Publish npm artifact'

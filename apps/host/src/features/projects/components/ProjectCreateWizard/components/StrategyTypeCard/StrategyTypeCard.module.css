@@ -1,0 +1,30 @@
+/* Selectable strategy-template tile — neutral by default, accent ring + corner check
+   when selected (mirrors the project-type card / prototype .dcard). */
+.card {
+  cursor: pointer;
+  height: 100%;
+  position: relative;
+  transition: border-color var(--cl-ease), background var(--cl-ease);
+}
+.card:hover {
+  border-color: var(--cl-border-strong);
+}
+
+.selected,
+.selected:hover {
+  border-color: var(--cl-accent);
+  background: var(--cl-accent-soft);
+}
+
+.check {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--cl-accent);
+  color: var(--cl-text-on-acc);
+  display: grid;
+  place-items: center;
+}

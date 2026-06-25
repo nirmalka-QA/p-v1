@@ -1,0 +1,39 @@
+/* Selectable project-type tile in the create wizard — the prototype's .dcard:
+   neutral by default, accent border + soft fill + corner check when selected. */
+.card {
+  cursor: pointer;
+  height: 100%;
+  position: relative;
+  transition: border-color var(--cl-ease), background var(--cl-ease);
+}
+.card:hover {
+  border-color: var(--cl-border-strong);
+}
+
+.selected,
+.selected:hover {
+  border-color: var(--cl-accent);
+  background: var(--cl-accent-soft);
+}
+
+/* Corner check badge shown on the selected tile (prototype .dck). */
+.check {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--cl-accent);
+  color: var(--cl-text-on-acc);
+  display: grid;
+  place-items: center;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.disabled:hover {
+  border-color: var(--cl-border);
+}

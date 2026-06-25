@@ -1,0 +1,4 @@
+/* Project-status rows navigate to the project on click. */
+.clickRow {
+  cursor: pointer;
+}

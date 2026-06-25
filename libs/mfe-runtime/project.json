@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "mfe-runtime",
+  "projectType": "library",
+  "sourceRoot": "libs/mfe-runtime/src",
+  "tags": ["type:lib", "scope:shared"]
+}

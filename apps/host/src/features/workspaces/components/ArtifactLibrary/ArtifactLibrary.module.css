@@ -1,0 +1,90 @@
+/* Workspace artifact library aside — the prototype's .ws-side doc list. Read-only
+   in Phase 1 (upload lands with Phase 2). */
+.side {
+  position: sticky;
+  top: 8px;
+  background: var(--cl-bg-elev);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-lg);
+  padding: 15px 16px;
+}
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+.title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cl-text);
+}
+.count {
+  font-family: var(--cl-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cl-text-3);
+  background: var(--cl-bg-elev);
+  border: 1px solid var(--cl-border);
+  border-radius: 20px;
+  padding: 1px 8px;
+}
+.upload {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cl-accent);
+  background: transparent;
+  border: 1px solid var(--cl-border);
+  border-radius: 7px;
+  padding: 4px 9px;
+  transition: all var(--cl-ease);
+}
+.upload:hover {
+  border-color: var(--cl-border-strong);
+  background: var(--cl-bg-hover);
+}
+.sub {
+  font-size: 11px;
+  color: var(--cl-text-3);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cl-border);
+}
+.row:first-child {
+  padding-top: 0;
+}
+.row:last-child {
+  border-bottom: none;
+}
+.ic {
+  width: 26px;
+  height: 30px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-family: var(--cl-mono);
+  font-size: 7.5px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cl-text);
+  line-height: 1.3;
+}
+.meta {
+  font-family: var(--cl-mono);
+  font-size: 9.5px;
+  color: var(--cl-text-4);
+}

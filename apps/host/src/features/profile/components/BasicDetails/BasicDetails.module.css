@@ -1,0 +1,16 @@
+/* Avatar + edit-overlay: the camera button sits at the avatar's bottom-right with a
+   ring matching the card surface so it reads as a distinct control. */
+.avatarWrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.avatarEdit {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid var(--cl-bg-elev);
+  box-shadow: var(--cl-shadow-sm);
+}
